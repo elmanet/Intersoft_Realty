@@ -87,11 +87,11 @@ $_SESSION['captcha_id'] = $str;
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body style="background:url('images/f4.jpg');background-size:100%;">
+    <body style="background:url('images/f7.jpg');background-size:100%;">
 
         <div class="form-box" id="login-box">
             <div class="header">
-                <img src="images/logo2.png"  width="100%" />
+                <img src="images/logo2.png"  width="50%" />
 
             </div>
             <form action="<?php echo $loginFormAction; ?>" method="post" id="captchaform">
