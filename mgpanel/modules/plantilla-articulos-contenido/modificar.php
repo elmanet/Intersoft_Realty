@@ -23,6 +23,8 @@ $totalRows_categoria = mysql_num_rows($categoria);
 <head>
 <meta http-equiv="Content-type" content="text/html; utf-8" />
 <link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+<?php require_once('modules/inc/editor.inc.php'); ?>
+
 <script> 
 $(document).ready(function() {
  	$("#sineditor").hide();
@@ -37,7 +39,7 @@ $(document).ready(function() {
 $(function(){
  $("#grabar").click(function(){
 
- 	CKEDITOR.instances['contenido1'].updateElement();
+ 	if (tinyMCE) tinyMCE.triggerSave();
  	
  	if($("#titulo_articulo").val().length < 3) {  
         $('#msgerror').show();
@@ -109,7 +111,7 @@ $(function(){
 <form   id="captchaform" method="POST"   enctype="multipart/form-data" >
 
 
- 		<table>
+<table style="width: 100%;">
  		<tr>
 			<td>
 			<div class="input-group">
@@ -151,16 +153,10 @@ $(function(){
 
 		<tr>
 			<td>
-			<div class="input-group" id="coneditor" >
+			<div class="input-group" id="coneditor" style="width: 100%;">
 			
-			<textarea name="contenido1" id="contenido1" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?php echo $row_modulos['contenido'];?></textarea>
+			<textarea name="contenido" id="contenido" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?php echo $row_modulos['contenido'];?></textarea>
 
-			</div>
-
-			<div class="input-group" id="sineditor" style="width: 100%;">
-			
-			<textarea  name="contenido2" id="contenido2" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?php echo $row_modulos['contenido'];?></textarea>
-			<br><a href="#" id="cambiar2">Cambiar a modo Editor</a>
 			</div>
 			</td>
 		</tr>
@@ -168,15 +164,16 @@ $(function(){
 
 
 		<tr><td>&nbsp;</td></tr>
-		<tr>
-	
-		<td colspan="2" align="center"><a href="index.php?mod=gestor-contenido" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <a href="#" id="grabar" class="btn btn-primary btn-lg"><i class="fa fa-th-large"></i><span> Modificar</span></a></td>
-		</tr>
+		
  		</table>
 
     
       <input type="hidden" name="id_articulo" id="id_articulo" value="<?php echo $row_modulos['id_articulo'];?>">
       <input type="hidden" name="status" id="status" value="1">
+
+		<div class="boton-modulo">
+			<a href="index.php?mod=gestor-contenido" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <a href="#" id="grabar" class="btn btn-primary btn-lg"><i class="fa fa-th-large"></i><span> Modificar</span></a>
+		</div>
 
 		</form>  
 
@@ -192,34 +189,6 @@ $(function(){
 				
 		</center>
 
-      <script src="js/plugins/ckeditor/ckeditor.js"></script>
-      <script src="js/plugins/ckeditor/config.js"></script>
-       
-
-		<script type="text/javascript">
-            $(function() {
-            	 CKEDITOR.replace('contenido1',{
-            	 	    filebrowserBrowseUrl : 'modules/file/ft2.php',
-            	 		uiColor: '#c3c3c3',
-						allowedContent: true
-						
-            	 		
-            	 	});
-            	
-            });
-
-            $(function(){
-			   $("#cambiar1").click(function(){
-				$("#sineditor").show();
-				$("#coneditor").hide();
-			   });
-
-			   $("#cambiar2").click(function(){
-				$("#sineditor").hide();
-				$("#coneditor").show();
-			   });
-
-			   });
-        </script>
+     
 		</body>
 		</html>

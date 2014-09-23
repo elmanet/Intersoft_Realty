@@ -20,6 +20,9 @@ $totalRows_categoria = mysql_num_rows($categoria);
 </style>
 
 
+<?php require_once('modules/inc/editor.inc.php'); ?>
+
+
 
 <script src="js/jquery.form.js"></script> 
  
@@ -36,20 +39,27 @@ $totalRows_categoria = mysql_num_rows($categoria);
     		});
 
  $("#grabar").click(function(){
+ 	$('#grabar').hide();
 
- 	CKEDITOR.instances['contenido1'].updateElement();
+ 	if (tinyMCE) tinyMCE.triggerSave(); 
+	if (myForm.contenido.value==''){
+		myForm.contenido.focus();
+		return false;
+	}
+	
 
  	if($("#titulo_articulo").val().length < 3) {  
         $('#msgerror').show();
         $("#msgerror p").html("<strong>Error!</strong> El articulo debe Tener un Titulo").show();
-      
+      	$('#grabar').show();
 
         return false;  
     }  
   
-  	if($("#contenido1").val().length < 3) {  
+  	if($("#contenido").val().length < 3) {  
         $('#msgerror').show();
         $("#msgerror p").html("<strong>Error!</strong> Debes agregar informacion al articulo").show();
+        $('#grabar').show();
       
 
         return false;  
@@ -137,7 +147,7 @@ $totalRows_categoria = mysql_num_rows($categoria);
 
 
 
-<table>
+<table style="width: 100%;">
  		
 		<tr>
 			<td>
@@ -191,35 +201,28 @@ $totalRows_categoria = mysql_num_rows($categoria);
 
 		<tr>
 			<td>
-			<div class="input-group" id="coneditor">
-			  <textarea  name="contenido1" id="contenido1" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
-               
-
-			</div>
-			<div class="input-group" id="sineditor" style="width: 100%;">
-			  <textarea  name="contenido2" id="contenido2" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
-               <br><a href="#" id="cambiar2">Cambiar a modo Editor</a>
-
-			</div>
+			<div class="input-group" id="coneditor" style="width: 100%;">
+			  <textarea  name="contenido" id="contenido" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
+             </div>
 			</td>
 		</tr>
 			
 
 
 		<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td colspan="2" align="center">
+			
 
-			<a href="index.php?mod=gestor-blog"  class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <input type="submit" id="grabar" class="btn btn-primary btn-lg " value="Grabar Nuevo" />
 
-			</td>
-		</tr>
  		</table>
 
     
       <input type="hidden" name="id_articulo" id="id_articulo" value="">
       <input type="hidden" name="orden" id="orden" value="1">
       <input type="hidden" name="status" id="status" value="1">
+
+      <div class="boton-modulo">
+      	<a href="index.php?mod=gestor-blog"  class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <input type="submit" id="grabar" class="btn btn-primary btn-lg " value="Grabar Nuevo" />
+      </div>
 
 		</form>  
 
@@ -234,34 +237,6 @@ $totalRows_categoria = mysql_num_rows($categoria);
 
 				
 		</center>
-      <script src="js/plugins/ckeditor/ckeditor.js"></script>
-      <script src="js/plugins/ckeditor/config.js"></script>
-       
 
-		<script type="text/javascript">
-            $(function() {
-            	 CKEDITOR.replace('contenido1',{
-            	 	    filebrowserBrowseUrl : 'modules/file/ft2.php',
-            	 		uiColor: '#c3c3c3',
-						allowedContent: true
-						
-            	 		
-            	 	});
-            	
-            });
-
-            $(function(){
-			   $("#cambiar1").click(function(){
-				$("#sineditor").show();
-				$("#coneditor").hide();
-			   });
-
-			   $("#cambiar2").click(function(){
-				$("#sineditor").hide();
-				$("#coneditor").show();
-			   });
-
-			   });
-        </script>
 		</body>
 		</html>

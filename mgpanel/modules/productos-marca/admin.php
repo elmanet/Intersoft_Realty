@@ -1,7 +1,4 @@
 <?php
-require_once('../inc/conexion_modules.inc.php'); 
-require_once('../inc/config.inc.php');
-require_once('../inc/usuario.inc.php');
 
 mysql_select_db($database_sistemai, $sistemai);
 $query_categoria = "SELECT * FROM sis_productos_fabricantes";
@@ -11,38 +8,48 @@ $totalRows_categoria = mysql_num_rows($categoria);
 
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-type" content="text/html; utf-8" />
-<title><?php echo $row_config['title_site'];?></title>
-<link href="../../css/main_central.css" rel="stylesheet" type="text/css" />
-<link href="../../css/modules.css" rel="stylesheet" type="text/css" />
- <link href="../../css/marca.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="../../images/favicon.ico">
-<?php require_once('../inc/condicion_eliminar.inc.php'); ?>
-</head>
-<body>
-<div class="boton_modulos">
-<a href="nuevo.php" ><img src="../../images/iconspng/1371153548_sign-up.png" width="28" height="28" alt="" valign="middle" /> Nuevo</a>
-</div>
-<center>
-<!--
-<a href="usuario_nuevo.php" style="font-size:16px;"><img src="../../images/pngnew/agregar-usuarios-icono-3782-48.png" alt="" align="middle">Nuevo Cliente</a>
--->
-<br>
+<?php /* FUNCION PREGUNTAR ANTES */ ?>         
+<script type="text/javascript" src="js/jconfirmaction.jquery.js"></script>
+        <script type="text/javascript">
+          
+          $(document).ready(function() {
+            
+            
+            $('.ask-plain').click(function(e) {
+              
+              e.preventDefault();
+              thisHref  = $(this).attr('href');
+              
+              if(confirm('Are you sure')) {
+                window.location = thisHref;
+              }
+              
+            });
+            
+            $('.ask-custom').jConfirmAction({question : "Quieres Eliminarlo?", yesAnswer : "Si", cancelAnswer : "Cancelar"});
+            $('.ask').jConfirmAction();
+          });
+          
+        </script>
+ <?php /* FUNCION PREGUNTAR ANTES */ ?> 
+
             
 <?php if ($totalRows_categoria>0){ ?>            
-<div class="tablaestilo">
-		<table summary="Usuarios" width="90%">
-				<caption>LISTADO DE FABRICANTES/MARCAS </caption>
-				<thead>
+
+<div class="box">
+   <div class="box-header">
+    <h3 class="box-title">LISTADO DE MARCAS/FABRICANTES</h3> 
+    <small class="btn btn-success btn-lg" style="position:absolute; right:10px;top:10px;"><a href="index.php?mod=nueva-marca-producto" style="color:#fff;"><i class="glyphicon glyphicon-plus"></i><span> Nuevo</span></a></small>                                   
+   </div><!-- /.box-header -->
+  <div class="box-body table-responsive">
+    <table id="example1" class="table table-bordered table-striped">
+
+				    <thead>
               <tr >
-              <th width="10%" height="35"  align="center" scope="col"><b>ID</b></th>
-              <th width="40%" height="35"  align="center" scope="col" ><b>Nombre del Fabricante/Marca</b></th>
-              <th width="20%" align="center" scope="col"><b>Imagen</b></th>
-					<th width="20%" align="center" scope="col"><b>Status</b></th>
-              <th width="10%" height="35"  align="center" scope="col"><b>Opciones</b></th>
+              <th><b>ID</b></th>
+              <th><b>Nombre del Fabricante/Marca</b></th>
+					    <th><b>Status</b></th>
+              <th><b>Opciones</b></th>
               </tr>
              </thead>
              
@@ -51,42 +58,52 @@ $totalRows_categoria = mysql_num_rows($categoria);
               <td  height="26" align="center" ><?php echo $row_categoria['id']; ?></td>
               <td  height="26" align="center" ><?php echo strtoupper($row_categoria['nombre_marca']); ?></td>
               <td  align="center" >
-              	<?php if ($row_categoria['ruta']=="imagenes/"){ ?>
-					<img src="../../images/iconfinder/no-imagen2.png" alt="" height="50" >
-              <?php } else { ?>
-              <img src="<?php echo $row_categoria['ruta']; ?>" alt="" height="50" >
-              <?php } ?>              	
-              	              
+                <?php if ($row_categoria['status']==0){ ?><span class="glyphicon glyphicon-thumbs-down" style="font-size:2em;"></span><?php }  ?>
+                <?php if ($row_categoria['status']==1){ ?><span class="glyphicon glyphicon-thumbs-up" style="font-size:2em;"></span><?php }  ?>
               </td>
-              <td  align="center" >
-					<?php if ($row_categoria['status']==0){ ?><img src="../../images/iconfinder/not.gif" alt=""  ></a> <?php }  ?>
-					<?php if ($row_categoria['status']==1){ ?><img src="../../images/iconfinder/yes.gif" alt=""  ></a> <?php }  ?>           
-              </td>
-				  <td  align="center" ><a href="modificar.php?id=<?php echo $row_categoria['id'];?>"><img src="../../images/png/32px-Crystal_Clear_action_reload.png" alt="" width="16" ></a>&nbsp;<?php if($row_usua['cod']==5) {?><a href="eliminar.php?id=<?php echo $row_categoria['id'];?>&ruta=<?php echo $row_categoria['ruta'];?>" class="ask-custom"><img src="../../images/png/cancel_f2.png" alt="" width="16"></a> <?php } ?></td>
-        
-              </tr>
+              <td  align="center" ><a href="index.php?mod=modificar-marca-producto&id=<?php echo $row_categoria['id'];?>"><span class="glyphicon glyphicon-pencil" style="font-size:2em;"></span></a>&nbsp;<a href="javascript:cargar('#divtest', 'modules/productos-marca/eliminar.php?id=<?php echo $row_categoria['id'];?>&ruta=<?php echo '../../../imagesmg/'.$row_categoria['ruta'];?>')"  class="ask-custom"><span class="glyphicon glyphicon-trash" style="font-size:2em;"></span></a></td>
+				  
+        </tr>
               <?php } while ($row_categoria = mysql_fetch_assoc($categoria)); ?>
             </table>
-            
-            </div>
+          </div><!-- /.box-body -->
+         </div><!-- /.box -->
             <?php } ?>
            <?php if (($totalRows_categoria==0)){ ?> 
             <br>
+            <small class="btn btn-success btn-lg" style="position:absolute; right:10px;top:110px;"><a href="index.php?mod=nueva-marca-producto" style="color:#fff;"><i class="glyphicon glyphicon-plus"></i><span> Agregar Categoría</span></a></small>                                   
             <center>
             <img src="../../images/iconfinder/vacio.png" alt="" width="200">
-				<p style="font-size:19px;">"No Hay Fabricantes/marcas Registradas!"</p>            
+        <p style="font-size:19px;">"No Hay Marcas Registradas!"</p>            
             </center>
             <?php } ?>
             <br />
             <br />
-				<br />
+        <br />
            <br />
             <br />
-				<br />
+        <br />
            <br />
             <br />
-				<br />
-</center>	
-</body>
+        <br />
+</center> 
+<!-- DATA TABES SCRIPT -->
+        <script src="js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+        <script src="js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+        
+                 <!-- page script -->
+        <script type="text/javascript">
+            $(function() {
+                $("#example1").dataTable();
+                $('#example2').dataTable({
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": false,
+                    "bSort": true,
+                    "bInfo": true,
+                    "bAutoWidth": false,
+                    
+                });
 
-</html>
+            });
+        </script>

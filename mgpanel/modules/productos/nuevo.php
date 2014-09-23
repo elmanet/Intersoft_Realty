@@ -26,7 +26,7 @@ $totalRows_marca = mysql_num_rows($marca);
 #percent { position:absolute; display:inline-block; top:3px; left:48%; }
 </style>
 
-
+<?php require_once('modules/inc/editor.inc.php'); ?>
 
 <script src="js/jquery.form.js"></script> 
  
@@ -45,7 +45,7 @@ $totalRows_marca = mysql_num_rows($marca);
     $("#grabar").click(function(){
  			
 			 
-    CKEDITOR.instances['des_prod1'].updateElement();
+    if (tinyMCE) tinyMCE.triggerSave(); 
 
  	if($("#cod_prod").val().length < 2) {  
         $('#msgerror').show();
@@ -153,7 +153,7 @@ $totalRows_marca = mysql_num_rows($marca);
 <center>
 <br>
 
-<div id="msgerror" class="alert alert-warning alert-dismissable" style="position:absolute;z-index:10 !important;right:5px;top: 144px;">
+<div id="msgerror" class="alert alert-warning alert-dismissable" style="position:absolute;z-index:10 !important;right:5px;top: 80px;">
    <i class="fa fa-warning"></i><p></p></div>
 <!-- FORMULARIO REGISTRO  -->
 <div class="box box-warning" id="wtop">
@@ -286,35 +286,26 @@ $totalRows_marca = mysql_num_rows($marca);
 
 <div class="box-formulario2">
 	<table>
-	<tr>
+
+		<tr>
 			<td>
-			<div class="input-group" id="coneditor">
-			  <textarea  name="des_prod1" id="des_prod1" placeholder="Descripción larga del Producto" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea> 
-
-			</div>
-			<div class="input-group" id="sineditor">
-			  <textarea  name="des_prod2" id="des_prod2" placeholder="Descripción larga del Producto" style="width: 400px; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
-               <br><a href="#" id="cambiar2">Cambiar a modo Editor</a>
-
-			</div>
+			<div class="input-group" id="coneditor" style="width: 100%;">
+			  <textarea  name="contenido" id="contenido" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
+             </div>
 			</td>
 		</tr>
-
 		
 
 		<tr><td>&nbsp;</td></tr>
-		<tr>
-	
-		<td colspan="2" align="center">
+		
 
-			<a href="index.php?mod=gestor-productos" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <input type="submit" id="grabar" class="btn btn-primary btn-lg " value="Grabar Nuevo" />
-
-			</td>
-		</tr>
 	</table>
 </div>
 
-    
+    	<div class="boton-modulo">
+			<a href="index.php?mod=gestor-productos" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <input type="submit" id="grabar" class="btn btn-primary btn-lg " value="Grabar Nuevo" />
+		</div>
+
        <input type="hidden" name="id" id="id" value="">
        <input type="hidden" name="status" id="status" value="1">
        <input type="hidden" name="destacado" id="destacado" value="0">
@@ -348,34 +339,6 @@ $totalRows_marca = mysql_num_rows($marca);
 
 				
 		</center>
-      <script src="js/plugins/ckeditor/ckeditor.js"></script>
-      <script src="js/plugins/ckeditor/config.js"></script>
-       
 
-		<script type="text/javascript">
-            $(function() {
-            	 CKEDITOR.replace('des_prod1',{
-            	 	    filebrowserBrowseUrl : 'modules/file/ft2.php',
-            	 		uiColor: '#c3c3c3',
-						allowedContent: true
-						
-            	 		
-            	 	});
-            	
-            });
-
-            $(function(){
-			   $("#cambiar1").click(function(){
-				$("#sineditor").show();
-				$("#coneditor").hide();
-			   });
-
-			   $("#cambiar2").click(function(){
-				$("#sineditor").hide();
-				$("#coneditor").show();
-			   });
-
-			   });
-        </script>
 		</body>
 		</html>

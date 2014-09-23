@@ -2,11 +2,8 @@
 
 require_once('../inc/conexion_modules.inc.php'); 
 
-if($_POST['contenido1']==""){
-    $contenido=$_POST['contenido2'];
-}else{
-    $contenido=$_POST['contenido1'];
-}
+    $contenido=$_POST['contenido'];
+
 
 $updateSQL = sprintf("UPDATE sis_plantilla_articulos SET id_art_cate=%s, titulo_articulo=%s,  alias=%s, contenido=%s, orden=%s,  status=%s WHERE id_articulo=%s",  
 							 

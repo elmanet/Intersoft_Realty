@@ -2,10 +2,11 @@
 require_once('modules/inc/usuario.inc.php');
 
 mysql_select_db($database_sistemai, $sistemai);
-$query_categoria = "SELECT a.id, a.nombre_cate, a.des_cate, a.status, a.idcp, a.ruta,  b.nombre_catep  FROM sis_productos_categoria a, sis_productos_categoria_padre b WHERE a.idcp=b.id";
+$query_categoria = "SELECT id, nombre_cate, des_cate, ruta, catep, orden, status FROM sis_productos_categoria";
 $categoria = mysql_query($query_categoria, $sistemai) or die(mysql_error());
 $row_categoria = mysql_fetch_assoc($categoria);
 $totalRows_categoria = mysql_num_rows($categoria);
+
 ?>
 <?php /* FUNCION PREGUNTAR ANTES */ ?>         
 <script type="text/javascript" src="js/jconfirmaction.jquery.js"></script>
@@ -45,8 +46,9 @@ $totalRows_categoria = mysql_num_rows($categoria);
 			      <thead>
               <tr >
               <th><b>Nombre de la Categor&iacute;a</b></th>
-              <th><b>Categor&iacute;a Principal (Padre)</b></th>
-					    <th><b>Status</b></th>
+              <th><b>Categor&iacute;a Superior</b></th>
+					    <th><b>Orden</b></th>
+              <th><b>Status</b></th>
               <th><b>Opciones</b></th>
               </tr>
              </thead>
@@ -54,7 +56,23 @@ $totalRows_categoria = mysql_num_rows($categoria);
               <?php do { ?>
               <tr class="odd">
               <td  height="26" align="center" ><?php echo strtoupper($row_categoria['nombre_cate']); ?></td>
-              <td  height="26" align="center" ><?php echo strtoupper($row_categoria['nombre_catep']); ?></td>
+              <td  height="26" align="center" >
+              <?php
+              if($row_categoria['catep']>0){
+                $cat=$row_categoria['catep'];
+
+                mysql_select_db($database_sistemai, $sistemai);
+                $query_categoriap = "SELECT id, nombre_cate, des_cate, ruta, catep, status FROM sis_productos_categoria WHERE id=$cat";
+                $categoriap = mysql_query($query_categoriap, $sistemai) or die(mysql_error());
+                $row_categoriap = mysql_fetch_assoc($categoriap);
+                $totalRows_categoriap = mysql_num_rows($categoriap);
+
+                echo strtoupper($row_categoriap['nombre_cate']);
+
+                } 
+               ?>
+             </td>
+             <td  height="26" align="center" ><?php echo $row_categoria['orden']; ?></td>
               <td  align="center" >
                 <?php if ($row_categoria['status']==0){ ?><span class="glyphicon glyphicon-thumbs-down" style="font-size:2em;"></span><?php }  ?>
                 <?php if ($row_categoria['status']==1){ ?><span class="glyphicon glyphicon-thumbs-up" style="font-size:2em;"></span><?php }  ?>

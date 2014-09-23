@@ -13,6 +13,9 @@ $totalRows_posicion = mysql_num_rows($posicion);
 <head>
 <meta http-equiv="Content-type" content="text/html; utf-8" />
 
+<?php require_once('modules/inc/editor.inc.php'); ?>
+<script src="js/jquery.form.js"></script> 
+
 <script> 
 $(document).ready(function() {
 	$('#message').hide();
@@ -26,7 +29,8 @@ $(document).ready(function() {
 $(function(){
  $("#grabar").click(function(){
 
- 	CKEDITOR.instances['contenido'].updateElement();
+ if (tinyMCE) tinyMCE.triggerSave(); 
+
 
  	if($("#titulo").val().length < 3) {  
         $('#msgerror').show();
@@ -113,7 +117,7 @@ $(function(){
  <form   id="captchaform" method="POST"  enctype="multipart/form-data" >
 
 
-<table>
+<table style="width: 100%;">
 
 		<tr>
 			<td>
@@ -158,20 +162,21 @@ $(function(){
 		</tr>	
 
 		<tr>
-			<td>
-			<div class="input-group">
-			<textarea  name="contenido" id="contenido" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
-            </div>
-			</td>
-		</tr>
+      <td>
+      <div class="input-group" id="coneditor" style="width: 100%;">
+        <textarea  name="contenido" id="contenido" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
+             </div>
+      </td>
+    </tr>
 			
 		<tr><td>&nbsp;</td></tr>
-		<tr>
-	
-		<td colspan="2" align="center"><a href="index.php?mod=gestor-modulos" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <a href="#" id="grabar" class="btn btn-primary btn-lg"><i class="fa fa-th-large"></i><span> Grabar Nuevo</span></a></td>
-		</tr>
+		
+    
  		</table>
 
+    <div class="boton-modulo">
+      <a href="index.php?mod=gestor-modulos" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a> &nbsp;&nbsp;&nbsp;   <a href="#" id="grabar" class="btn btn-primary btn-lg"><i class="fa fa-th-large"></i><span> Grabar Nuevo</span></a>
+    </div>
     
       <input type="hidden" name="id" id="id" value="">
       <input type="hidden" name="hecho" id="hecho" value="<?php echo $row_usua['id_usuario'];?> ">
@@ -191,22 +196,5 @@ $(function(){
 		
 </center>
 
-<script src="js/plugins/ckeditor/ckeditor.js"></script>
-<script src="js/plugins/ckeditor/config.js"></script>
-       
-
-		<script type="text/javascript">
-            $(function() {
-            	 CKEDITOR.replace('contenido',{
-            	 	    filebrowserBrowseUrl : 'modules/file/ft2.php',
-            	 		uiColor: '#c3c3c3',
-						allowedContent: true
-						
-            	 		
-            	 	});
-            	
-            });
-
-        </script>
 </body>
 </html>

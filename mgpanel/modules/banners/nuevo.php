@@ -178,16 +178,14 @@ $totalRows_cate = mysql_num_rows($cate);
 		</tr>
 
 		<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td colspan="2" align="center">
-
-			<a href="index.php?mod=gestor-banner" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <input type="submit" id="grabar" class="btn btn-primary btn-lg " value="Grabar Nuevo" />
-
-			</td>
-		</tr>
+		
+		
  		</table>
 
-    
+		    <div class="boton-modulo">
+				<a href="index.php?mod=gestor-banner" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <input type="submit" id="grabar" class="btn btn-primary btn-lg " value="Grabar Nuevo" />
+			</div>
+
       <input type="hidden" id="posicion" name="posicion" value="1" />
       <input type="hidden" name="id_foto" id="id_foto" value="">
       <input type="hidden" name="status" id="status" value="1">

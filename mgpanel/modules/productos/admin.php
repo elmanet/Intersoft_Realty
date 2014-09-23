@@ -50,7 +50,7 @@ $totalRows_producto = mysql_num_rows($producto);
     <small class="btn btn-success btn-lg" style="position:absolute; right:10px;top:10px;"><a href="index.php?mod=nuevo-producto" style="color:#fff;"><i class="glyphicon glyphicon-plus"></i><span> Agregar Producto</span></a></small>                                   
    </div><!-- /.box-header -->
   <div class="box-body table-responsive">
-    <table id="example1" class="table table-bordered table-striped">
+    <table id="example2" class="table table-bordered table-striped">
 				<thead>
 
             <tr >
@@ -142,17 +142,18 @@ $totalRows_producto = mysql_num_rows($producto);
             $(function() {
                 $("#example1").dataTable();
                 $('#example2').dataTable({
-                    "bPaginate": true,
-                    "bLengthChange": false,
-                    "bFilter": false,
-                    "bSort": true,
+                    "bPaginate": false,
+                    "bLengthChange": true,
+                    "bFilter": true,
+                    "bSort": false,
                     "bInfo": true,
-                    "bAutoWidth": false,
+                    "bAutoWidth": true,
                     
                 });
 
             });
         </script>
+    
         <?php /* FUNCION PREGUNTAR ANTES */ ?>         
     <script type="text/javascript" src="js/jconfirmaction.jquery.js"></script>
         <script type="text/javascript">

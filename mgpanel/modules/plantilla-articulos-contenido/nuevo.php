@@ -19,7 +19,7 @@ $totalRows_categoria = mysql_num_rows($categoria);
 #percent { position:absolute; display:inline-block; top:3px; left:48%; }
 </style>
 
-
+<?php require_once('modules/inc/editor.inc.php'); ?>
 
 <script src="js/jquery.form.js"></script> 
  
@@ -37,7 +37,7 @@ $totalRows_categoria = mysql_num_rows($categoria);
 
  $("#grabar").click(function(){
 
- 	CKEDITOR.instances['contenido1'].updateElement();
+ 	if (tinyMCE) tinyMCE.triggerSave();
 
  	if($("#titulo_articulo").val().length < 3) {  
         $('#msgerror').show();
@@ -137,7 +137,7 @@ $totalRows_categoria = mysql_num_rows($categoria);
 
 
 
-<table>
+<table style="width: 100%;">
  		
 		<tr>
 			<td>
@@ -180,32 +180,21 @@ $totalRows_categoria = mysql_num_rows($categoria);
 
 		<tr>
 			<td>
-			<div class="input-group" id="coneditor">
-			  <textarea  name="contenido1" id="contenido1" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
-               
-
-			</div>
-			<div class="input-group" id="sineditor" style="width: 100%;">
-			  <textarea  name="contenido2" id="contenido2" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
-               <br><a href="#" id="cambiar2">Cambiar a modo Editor</a>
-
-			</div>
+			<div class="input-group" id="coneditor" style="width: 100%;">
+			  <textarea  name="contenido" id="contenido" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
+             </div>
 			</td>
 		</tr>
 			
 
 
 		<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td colspan="2" align="center">
-
-			<a href="index.php?mod=gestor-contenido" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <input type="submit" id="grabar" class="btn btn-primary btn-lg " value="Grabar Nuevo" />
-
-			</td>
-		</tr>
+		
  		</table>
 
-    
+   		 <div class="boton-modulo">
+			<a href="index.php?mod=gestor-contenido" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <input type="submit" id="grabar" class="btn btn-primary btn-lg " value="Grabar Nuevo" />
+		</div>
       <input type="hidden" name="id_articulo" id="id_articulo" value="">
       <input type="hidden" name="tipo_articulo" id="tipo_articulo" value="3">
       <input type="hidden" name="orden" id="orden" value="1">
@@ -224,34 +213,6 @@ $totalRows_categoria = mysql_num_rows($categoria);
 
 				
 		</center>
-      <script src="js/plugins/ckeditor/ckeditor.js"></script>
-      <script src="js/plugins/ckeditor/config.js"></script>
-       
 
-		<script type="text/javascript">
-            $(function() {
-            	 CKEDITOR.replace('contenido1',{
-            	 	    filebrowserBrowseUrl : 'modules/file/ft2.php',
-            	 		uiColor: '#c3c3c3',
-						allowedContent: true
-						
-            	 		
-            	 	});
-            	
-            });
-
-            $(function(){
-			   $("#cambiar1").click(function(){
-				$("#sineditor").show();
-				$("#coneditor").hide();
-			   });
-
-			   $("#cambiar2").click(function(){
-				$("#sineditor").hide();
-				$("#coneditor").show();
-			   });
-
-			   });
-        </script>
 		</body>
 		</html>

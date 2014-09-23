@@ -2,11 +2,7 @@
 
 require_once('../inc/conexion_modules.inc.php'); 
 
-if($_POST['des_prod1']==""){
-    $des_prod=$_POST['des_prod2'];
-}else{
-    $des_prod=$_POST['des_prod1'];
-}
+    $des_prod=$_POST['contenido'];
 
 $updateSQL = sprintf("UPDATE sis_productos SET cod_prod=%s, nombre_prod=%s, id_cate=%s, id_marca=%s, des_prod=%s, des_prod_corto=%s, existencia=%s, precio=%s, descuento=%s, destacado=%s, clave=%s, status=%s WHERE id=%s",  
 							 

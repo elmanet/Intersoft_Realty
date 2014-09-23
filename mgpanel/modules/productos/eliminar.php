@@ -15,7 +15,7 @@ $totalRows_fotos = mysql_num_rows($fotos);
 if($ruta=="../../../imagesmg/imagenes/") { //verificamos que no hallan fotos
 	
 	if($id>0) {
-		echo "<center><br><div class='tablaestilo'><table width='90%'><caption>Eliminando Producto!</caption></table></center>";
+		echo "<center><br><div class='tablaestilo'><table width='90%'><caption>Eliminando Producto2!</caption></table></center>";
 
 		$sql = "DELETE FROM sis_productos WHERE id=$id LIMIT 1"; 
 	       $res=mysql_query($sql,$sistemai);          
@@ -27,7 +27,7 @@ if($ruta=="../../../imagesmg/imagenes/") { //verificamos que no hallan fotos
 		
 	if(unlink("$ruta"))
 	{
-		echo "<center><br><div class='tablaestilo'><table width='90%'><caption>Eliminando Producto!</caption></table></center>";
+		echo "<center><br><div class='tablaestilo'><table width='90%'><caption>Eliminando Producto3!</caption></table></center>";
 		$sql = "DELETE FROM sis_productos_foto WHERE id=$id LIMIT 1"; 
                 $res=mysql_query($sql,$sistemai);
 		

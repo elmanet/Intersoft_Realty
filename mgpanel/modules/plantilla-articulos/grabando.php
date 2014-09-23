@@ -86,18 +86,13 @@ move_uploaded_file($rutaTemporal,$rutaDestino);
 
 $alias=sanear_string($_POST['titulo_articulo']);
 
-if($_POST['contenido1']==""){
-    $contenido=$_POST['contenido2'];
-}else{
-    $contenido=$_POST['contenido1'];
-}
 
  $insertSQL = sprintf("INSERT INTO sis_plantilla_articulos(id_articulo,id_art_cate, titulo_articulo, alias, contenido, orden, tipo_articulo,  status, ruta) VALUES ( %s,%s,%s,%s, %s, %s, %s, %s, %s)", 
 						GetSQLValueString($_POST['id_articulo'], "int"),
 						GetSQLValueString($_POST['id_art_cate'], "int"),
 						GetSQLValueString($_POST['titulo_articulo'], "text"),
 						GetSQLValueString($alias, "text"),
-						GetSQLValueString($contenido, "text"),
+						GetSQLValueString($_POST['contenido'], "text"),
 						GetSQLValueString($orden, "int"),
 						GetSQLValueString($_POST['tipo_articulo'], "int"),
                         GetSQLValueString($_POST['status'], "int"),

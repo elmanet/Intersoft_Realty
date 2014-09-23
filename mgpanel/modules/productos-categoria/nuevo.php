@@ -1,6 +1,6 @@
 <?php
 mysql_select_db($database_sistemai, $sistemai);
-$query_categoriap = sprintf("SELECT * FROM sis_productos_categoria_padre");
+$query_categoriap = sprintf("SELECT * FROM sis_productos_categoria");
 $categoriap = mysql_query($query_categoriap, $sistemai) or die(mysql_error());
 $row_categoriap = mysql_fetch_assoc($categoriap);
 $totalRows_categoriap = mysql_num_rows($categoriap);
@@ -9,6 +9,8 @@ $totalRows_categoriap = mysql_num_rows($categoriap);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-type" content="text/html; utf-8" />
+<?php require_once('modules/inc/editor.inc.php'); ?>
+
 
 <script> 
 $(document).ready(function() {
@@ -24,7 +26,7 @@ $(function(){
 
  $("#grabar").click(function(){
 
- 	CKEDITOR.instances['des_cate'].updateElement();
+ 	if (tinyMCE) tinyMCE.triggerSave(); 
 
  	if($("#nombre_cate").val().length < 3) {  
         $('#msgerror').show();
@@ -101,9 +103,10 @@ $(function(){
 			<td>
 			<div class="input-group">
 			<span class="input-group-addon"><i><strong class="fa fa-th-large"></strong></i></span>		
-			<select name="idcp" id="idcp" class="form-control" style="width:300px;">
+			<select name="catep" id="catep" class="form-control" style="width:300px;">
+      <option value="">Sin Categoría Superior</option>
             <?php do { ?>
-            <option value="<?php echo $row_categoriap['id']; ?>"><?php echo $row_categoriap['nombre_catep']; ?></option>
+            <option value="<?php echo $row_categoriap['id']; ?>"><?php echo $row_categoriap['nombre_cate']; ?></option>
             <?php } while ($row_categoriap = mysql_fetch_assoc($categoriap));
 		  	   $rows = mysql_num_rows($categoriap);
 		  	   if($rows > 0) {
@@ -112,28 +115,38 @@ $(function(){
 				 }
 			   ?>
             </select>
-            <small> <a href="index.php?mod=nueva-categoria-producto-padre">+ Nueva Categoría Padre</a></small>
 			</div>
       		</td>
 	 	</tr>
 
-	 	<tr>
-			<td>
-			<div class="input-group" id="coneditor">
-			  <textarea  name="des_cate" id="des_cate" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
+    <tr>
+      <td>
+      <div class="input-group">
+      <span class="input-group-addon"><i><strong class="fa fa-th-large"></strong></i></span>    
+      <input class="form-control fm" type="text" id="orden" placeholder="Orden" name="orden" value="" style="width:100px;" />
+      <small> Orden</small>
+      </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+      <div class="input-group" id="coneditor" style="width: 100%;">
+        <textarea  name="contenido" id="contenido" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
              </div>
-			</td>
-		</tr>
+      </td>
+    </tr>
+
 
 		<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td colspan="2" align="center">
+
+    </table>
+		<div class="boton-modulo">
 
 			<a href="index.php?mod=gestor-categoria-productos"  class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <input type="submit" id="grabar" class="btn btn-primary btn-lg " value="Grabar Nuevo" />
+    </div>
 
-			</td>
-		</tr>
- 		</table>
+ 		
 
     
       <input type="hidden" name="id" id="id" value="">
@@ -153,22 +166,5 @@ $(function(){
 
 				
 		</center>
-      <script src="js/plugins/ckeditor/ckeditor.js"></script>
-      <script src="js/plugins/ckeditor/config.js"></script>
-       
-
-		<script type="text/javascript">
-            $(function() {
-            	 CKEDITOR.replace('des_cate',{
-            	 	    filebrowserBrowseUrl : 'modules/file/ft2.php',
-            	 		uiColor: '#c3c3c3',
-						allowedContent: true
-						
-            	 		
-            	 	});
-            	
-            });
-
-        </script>
 		</body>
 		</html>

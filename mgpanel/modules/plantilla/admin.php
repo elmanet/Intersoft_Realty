@@ -1,4 +1,5 @@
 <?php
+
 mysql_select_db($database_sistemai, $sistemai);
 $query_modulo = "SELECT a.id, a.titulo, a.contenido, a.orden, a.status, b.id_pos, b.cod_pos, b.des_pos  FROM sis_plantilla_modulos a, sis_plantilla_posiciones b WHERE a.posicion=b.id_pos ORDER BY b.cod_pos, a.orden ASC;";
 $modulo = mysql_query($query_modulo, $sistemai) or die(mysql_error());
@@ -10,6 +11,32 @@ $totalRows_modulo = mysql_num_rows($modulo);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-type" content="text/html; utf-8" />
+
+
+<?php /* FUNCION PREGUNTAR ANTES */ ?>         
+<script type="text/javascript" src="js/jconfirmaction.jquery.js"></script>
+        <script type="text/javascript">
+          
+          $(document).ready(function() {
+            
+            
+            $('.ask-plain').click(function(e) {
+              
+              e.preventDefault();
+              thisHref  = $(this).attr('href');
+              
+              if(confirm('Are you sure')) {
+                window.location = thisHref;
+              }
+              
+            });
+            
+            $('.ask-custom').jConfirmAction({question : "Quieres Eliminarlo?", yesAnswer : "Si", cancelAnswer : "Cancelar"});
+            $('.ask').jConfirmAction();
+          });
+          
+        </script>
+ <?php /* FUNCION PREGUNTAR ANTES */ ?> 
 
 </head>
 
@@ -103,30 +130,6 @@ $totalRows_modulo = mysql_num_rows($modulo);
 
             });
         </script>
-        <?php /* FUNCION PREGUNTAR ANTES */ ?>         
-<script type="text/javascript" src="js/jconfirmaction.jquery.js"></script>
-        <script type="text/javascript">
-          
-          $(document).ready(function() {
-            
-            
-            $('.ask-plain').click(function(e) {
-              
-              e.preventDefault();
-              thisHref  = $(this).attr('href');
-              
-              if(confirm('Are you sure')) {
-                window.location = thisHref;
-              }
-              
-            });
-            
-            $('.ask-custom').jConfirmAction({question : "Quieres Eliminarlo?", yesAnswer : "Si", cancelAnswer : "Cancelar"});
-            $('.ask').jConfirmAction();
-          });
-          
-        </script>
- <?php /* FUNCION PREGUNTAR ANTES */ ?> 
 </body>
 
 </html>

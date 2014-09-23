@@ -3,7 +3,6 @@
 require_once('../inc/conexion_modules.inc.php'); 
 
 
-
 $updateSQL = sprintf("UPDATE sis_plantilla_modulos SET titulo=%s, contenido=%s, posicion=%s, orden=%s WHERE id=%s",  
 							 
 					GetSQLValueString($_POST['titulo'], "text"),

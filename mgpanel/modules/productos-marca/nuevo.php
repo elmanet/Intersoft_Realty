@@ -1,146 +1,135 @@
-<?php
-require_once('../inc/conexion_modules.inc.php'); 
-require_once('../inc/config.inc.php');
-
-// SQL PARA REGISTRO DE DATOS
-
- srand (time());
-$n=rand(1,900);
-$rutaEnServidor='imagenes';
-$rutaTemporal=$_FILES['imagen']['tmp_name'];
-$nombreImagen=$_FILES['imagen']['name'];
-if($nombreImages=="") {
-$rutaDestino=$rutaEnServidor.'/'.$nombreImagen;
-}else {
-	$rutaDestino=$rutaEnServidor.'/'.$n.$nombreImagen;
-	}
-move_uploaded_file($rutaTemporal,$rutaDestino);  
-
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
-
-if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "captchaform")) {
- $insertSQL = sprintf("INSERT INTO sis_productos_fabricantes(id, nombre_marca, des_marca, ruta, status) VALUES ( %s, %s, %s, %s, %s)", 
-							  GetSQLValueString($_POST['id'], "int"),
-						  	  GetSQLValueString($_POST['nombre_marca'], "text"),
-                       GetSQLValueString($_POST['des_marca'], "text"),
-                       GetSQLValueString($rutaDestino, "text"),
-							  GetSQLValueString($_POST['status'], "int"));
-                       
-  mysql_select_db($database_sistemai, $sistemai);
-  $Result1 = mysql_query($insertSQL, $sistemai) or die(mysql_error());
-
-  $insertGoTo = "procesando.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
-  header(sprintf("Location: %s", $insertGoTo));
-}
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1, utf-8" />
-<title><?php echo $row_config['title_site'];?></title>
-<link href="../../css/main_central.css" rel="stylesheet" type="text/css" />
-<link href="../../css/modules.css" rel="stylesheet" type="text/css" />
-<link href="../../css/input.css" rel="stylesheet" type="text/css">
-<link href="../../css/marca.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<meta http-equiv="Content-type" content="text/html; utf-8" />
 
-<?php require_once('../inc/validate.inc.php'); ?>
+<script> 
+$(document).ready(function() {
+	$('#message').hide();
+	$('#msgerror').hide();
+  $("form").keypress(function(e) {
+        if (e.which == 13) {
+            return false;
+        }
+    });
+}); 
+$(function(){
+ $("#grabar").click(function(){
 
+    CKEDITOR.instances['des_marca'].updateElement();
+    
+ 	if($("#nombre_marca").val().length < 3) {  
+        $('#msgerror').show();
+        $("#msgerror p").html("<strong>Error!</strong> Debes agregar un Nombre a la Marca").show();
+      
+
+        return false;  
+    }  
+    
+    
+ var url = "modules/productos-marca/grabando.php"; // El script a dónde se realizará la petición.
+
+
+    $.ajax({
+
+         type: "POST",
+           url: url,
+           data: $("#captchaform").serialize(), // Adjuntar los campos del formulario enviado.
+
+           success: function(data) {
+           		$('#message').show();
+            	$('#msgerror').hide();
+                $("#message p").html("Guardado con Exito!").show();
+                
+                $('#captchaform').hide();
+
+                setTimeout(function() {
+              url = "index.php?mod=gestor-marcas";
+              $(location).attr('href',url);
+              },1000);
+
+            }
+         });
+ 
+
+    return false; // Evitar ejecutar el submit del formulario.
+ });
+
+});
+
+
+</script>
+	  <script src="js/plugins/ckeditor/ckeditor.js"></script>
+      <script src="js/plugins/ckeditor/config.js"></script>
+       
+
+		<script type="text/javascript">
+            $(function() {
+            	 CKEDITOR.replace('des_marca',{
+            	 	    filebrowserBrowseUrl : 'modules/file/ft2.php',
+            	 		uiColor: '#c3c3c3',
+						allowedContent: true
+            	 	});
+            });
+        </script>
 </head>
-
-<body style=" background-image: url('../../images/fon_logo.jpg'); background-repeat: no-repeat;">
+<body>
 <center>
 <br>
-<div class="tablaestilo">
-<table width="90%">
-<caption>Agregar Nuevo Fabricante/Marca</caption>
-</table>
-</div>
 
-<!-- FORMULARIO REGISTRO NUEVO -->
+<div id="msgerror" class="alert alert-warning alert-dismissable" style="width:300px;position:absolute;z-index:10 !important;right:5px;">
+   <i class="fa fa-warning"></i><p></p></div>
+<!-- FORMULARIO REGISTRO NUEVO CLIENTE -->
+<div class="box box-warning">
+     <div class="box-header">
+            <h3 class="box-title">Agregar Nueva Marca</h3>
+     </div><!-- /.box-header -->
+<div class="box-body">
 
- <form action="<?php echo $editFormAction; ?>"  id="captchaform" method="POST" enctype="multipart/form-data" target="_self" class="cmxform" >
+ <form   id="captchaform" method="POST"  enctype="multipart/form-data" >
 
- 		<table style="width:900px;">
-<tr>
-<td>
-
-
-<table>
- 		<tr>
- 		
- 		</tr>
-
-		<table>
-		
-				
-		
-		
-		<tr>
-			<td align="right"><label> Nombre del Fabricante/Marca: </label></td>
+ 	<table>
+		<tr>	
 			<td>
-					
-			<input class="text_input" type="text" id="nombre_marca" name="nombre_marca" value="" style="width:300px;" /></td>
-			
+			<div class="input-group">
+			<span class="input-group-addon"><i><strong class="fa fa-th-large"></strong></i></span>		
+			<input class="form-control" type="text" id="nombre_marca" placeholder="Nombre de la Marca" name="nombre_marca" value="" style="width:300px;" />
+			</div>
+      </td>
 		</tr>
-			<tr>
-			<td align="right"><label>Seleccione la Imagen: </label></td>
-			<td>
-					
-			<input type="file" name="imagen" class="text_input"/>
-			
-		</tr>	
-			
+
 		<tr>
-			<td align="right"><label> Descripci&oacute;n: </label></td>
 			<td>
+			<div class="input-group" id="coneditor">
+			  <textarea  name="des_marca" id="des_marca" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                      
+             </div>
+			</td>
+		</tr>
 
-			<textarea class="ckeditor" COLS=50 ROWS=3  id="des_marca" name="des_marca" /></textarea></td>
-			<?php
-			require_once('../inc/file.inc.php'); 
-			?>			
-		</tr>	
-	
-
-</table>
-
-</td>
-</tr>
-		<tr><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td></tr>
 		<tr>
 	
-		<td colspan="2" align="center"><input type="submit" name="submit"  value="Procesar Registro" class="boton_guardar" /></td>
+		<td colspan="2" align="center"><a href="index.php?mod=gestor-marcas" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <a href="#" id="grabar" class="btn btn-primary btn-lg"><i class="fa fa-th-large"></i><span> Grabar Nuevo</span></a></td>
 		</tr>
  		</table>
 
     
       <input type="hidden" name="id" id="id" value="">
+      <input type="hidden" name="ruta" id="ruta" value="imagenes/">
       <input type="hidden" name="status" id="status" value="1">
-      <input type="hidden" name="foto_cate" id="foto_cate" value="0">
-     <input type="hidden" name="MM_insert" value="captchaform">	
+
 </form>  
 
-
 <!-- FIN DE NUEVO INGRESO -->	
+<div id="message" class="alert alert-success alert-dismissable" style="width:300px;position:relative;z-index:10 !important;">
+   <i class="fa fa-check"></i><p></p></div>
 
-
+<!-- FIN DE CLIENTE NUEVO INGRESO -->	
+</div>
+</div>
 		
 </center>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-	
 </body>
-
 </html>
+
+	

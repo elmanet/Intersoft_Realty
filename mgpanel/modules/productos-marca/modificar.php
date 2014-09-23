@@ -1,35 +1,4 @@
 <?php
-require_once('../inc/conexion_modules.inc.php'); 
-require_once('../inc/config.inc.php');
-
-// SQL PARA REGISTRO DE DATOS
-
-  
-
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
-
-if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "captchaform")) {
-
-   $updateSQL = sprintf("UPDATE sis_productos_fabricantes SET nombre_marca=%s, des_marca=%s, status=%s WHERE id=%s",  
-							 
-							  GetSQLValueString($_POST['nombre_marca'], "text"),
-                       GetSQLValueString($_POST['des_marca'], "text"),
-                       GetSQLValueString($_POST['status'], "int"),
-                       GetSQLValueString($_POST['id'], "int"));
-                       
-  mysql_select_db($database_sistemai, $sistemai);
-  $Result1 = mysql_query($updateSQL, $sistemai) or die(mysql_error());
-
-  $updateGoTo = "admin.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
-  header(sprintf("Location: %s", $updateGoTo));
-}
 
 $colname_categoria = "-1";
 if (isset($_GET['id'])) {
@@ -47,148 +16,144 @@ $totalRows_categoria = mysql_num_rows($categoria);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-type" content="text/html; utf-8" />
-<title><?php echo $row_config['title_site'];?></title>
-<link href="../../css/main_central.css" rel="stylesheet" type="text/css" />
-<link href="../../css/modules.css" rel="stylesheet" type="text/css" />
-<link href="../../css/input.css" rel="stylesheet" type="text/css">
-<link href="../../css/marca.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+<script> 
+$(document).ready(function() {
+ 	$("#sineditor").hide();
+	$('#message').hide();
+	$('#msgerror').hide();
+	$("form").keypress(function(e) {
+        if (e.which == 13) {
+            return false;
+        }
+    });
+}); 
+$(function(){
+ $("#grabar").click(function(){
 
-<link rel="shortcut icon" href="../../images/favicon.ico">
-<script type="text/javascript" src="../../js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="../../js/jconfirmaction.jquery.js"></script>
-		<script type="text/javascript">
-			
-			$(document).ready(function() {
-				
-				
-				$('.ask-plain').click(function(e) {
-					
-					e.preventDefault();
-					thisHref	= $(this).attr('href');
-					
-					if(confirm('Are you sure')) {
-						window.location = thisHref;
-					}
-					
-				});
-				
-				$('.ask-custom').jConfirmAction({question : "Quieres Eliminarlo?", yesAnswer : "Si", cancelAnswer : "Cancelar"});
-				$('.ask').jConfirmAction();
-			});
-			
-		</script>
+ 	CKEDITOR.instances['des_marca'].updateElement();
+ 	
+ 	if($("#nombre_marca").val().length < 3) {  
+        $('#msgerror').show();
+        $("#msgerror p").html("<strong>Error!</strong> Debe tener un nombre a la Marca").show();
+      
+
+        return false;  
+    }  
+
+   
+    
+ var url = "modules/productos-marca/modificando.php"; // El script a dónde se realizará la petición.
+
+
+    $.ajax({
+
+         type: "POST",
+           url: url,
+           data: $("#captchaform").serialize(), // Adjuntar los campos del formulario enviado.
+
+           success: function(data) {
+           		$('#message').show();
+           		$('#msgerror').hide();
+            	
+                $("#message p").html("Guardado con Exito!").show();
+                
+                $('#captchaform').hide();
+
+               setTimeout(function() {
+				     url = "index.php?mod=gestor-marcas";
+				      $(location).attr('href',url);
+				},1000);
+
+            }
+         });
  
+
+    return false; // Evitar ejecutar el submit del formulario.
+ });
+
+});
+
+
+</script>
+<script src="js/plugins/ckeditor/ckeditor.js"></script>
+      <script src="js/plugins/ckeditor/config.js"></script>
+       
+
+		<script type="text/javascript">
+            $(function() {
+            	 CKEDITOR.replace('des_marca',{
+            	 	    filebrowserBrowseUrl : 'modules/file/ft2.php',
+            	 		uiColor: '#c3c3c3',
+						allowedContent: true
+						
+            	 		
+            	 	});
+            	
+            });
+
+        </script>
 </head>
 
 <body>
 
 <center>
 <br>
-<div class="tablaestilo">
-<table summary="tabla" width="90%">
-<caption>Modificar Fabricante/Marca</caption>
-</table>
-</div>
-<!-- FORMULARIO MODIFICACION -->
+<div id="msgerror" class="alert alert-warning alert-dismissable" style="width:300px;position:absolute;z-index:10 !important;right:5px;">
+   <i class="fa fa-warning"></i><p></p></div>
 
- <form action="<?php echo $editFormAction; ?>"  id="captchaform" method="POST" enctype="multipart/form-data" target="_self" class="cmxform" >
-<table style="width:80%">
-<tr>
-<td>
+<!-- FORMULARIO REGISTRO NUEVO USUARIO -->
 
- 		<table>
- 		<tr>
+<div class="box box-warning">
+     <div class="box-header">
+            <h3 class="box-title">Modificar Marca/Fabricante</h3>
+     </div><!-- /.box-header -->
+<div class="box-body">
 
- 		</tr>
+<form   id="captchaform" method="POST"   enctype="multipart/form-data" >
 
-		<table>
-		<tr>
-			<td align="right" style="padding-top:0px;"><label> Foto: </label></td>
+	<table>
+		<tr>	
 			<td>
-			  <?php if($row_categoria['ruta'] == "imagenes/") { ?>
-				<img src="../../images/iconfinder/no-imagen2.png" alt="" width="120">	<br>
-				
-				<a href="cargar_foto.php?id=<?php echo $row_categoria['id'];?>">Subir Foto</a>
-
-				<?php } else { ?>
-				 <img src="<?php echo $row_categoria['ruta'];?>" alt="" width="120" style="border:1px solid;"><br>
-					<a href="eliminar_foto.php?id=<?php echo $row_categoria['id'];?>&ruta=<?php echo $row_categoria['ruta'];?>" class="ask-custom">Eliminar Foto</a>
-				<?php } ?>    
-   		</td>
-			
-								
-		</tr>
-		<tr>
-			<td align="right" style="padding-top:0px;"><label> Nombre del Fabricante/Marca: </label></td>
-			<td>
-		  
-			<input class="text_input_peq" style="width:300px;" type="text" id="nombre_marca" name="nombre_marca" value="<?php echo $row_categoria['nombre_marca'];?>" />
-		</td>
-			
-								
-		</tr>
-				
-		
-		<tr>
-			<td align="right"><label> Descripci&oacute;n: </label></td>
-			<td>
-
-			<textarea class="ckeditor" COLS=50 ROWS=3  id="des_marca" name="des_marca" /><?php echo $row_categoria['des_marca'];?></textarea></td>
-			<?php
-			require_once('../inc/file.inc.php'); 
-			?>			
+			<div class="input-group">
+			<span class="input-group-addon"><i><strong class="fa fa-th-large"></strong></i></span>		
+			<input class="form-control" type="text" id="nombre_marca" placeholder="Nombre de la Marca" name="nombre_marca" value="<?php echo $row_categoria['nombre_marca'];?>" style="width:300px;" />
+			</div>
+      </td>
 		</tr>
 
-		
 		<tr>
-			<td align="right"><label> Status: </label></td>
 			<td>
-				<select name="status" id="status" class="text_input_peq">
-				 <option value="<?php echo $row_categoria['status'];?>">
-				   <?php if($row_categoria['status']==1) { echo "Activo"; }?>
-				   <?php if($row_categoria['status']==0) { echo "Desactivado"; }?>
-				   </option>
-             
-             <option value="0">Desactivado</option>
-             <option value="1">Activo</option>
-             
-             </select>		
-		</tr>	
-		<tr>
-		<td>&nbsp;</td>
-		<td><br><br><input type="submit" name="submit"  value="Modificar Registro" class="boton_guardar" /><br>
-			
-		</td>		
+			<div class="input-group" id="coneditor">
+			  <textarea  name="des_marca" id="des_marca" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?php echo $row_categoria['des_marca'];?></textarea>                      
+             </div>
+			</td>
 		</tr>
-</table>
 
-</td>
-</tr>
 
+<tr><td>&nbsp;</td></tr>
+		<tr>
+	
+		<td colspan="2" align="center"><a href="index.php?mod=gestor-marcas" class="btn btn-danger btn-lg"><i class="glyphicon glyphicon-remove"></i><span> Cancelar</span></a>	&nbsp;&nbsp;&nbsp;	 <a href="#" id="grabar" class="btn btn-primary btn-lg"><i class="fa fa-th-large"></i><span> Modificar</span></a></td>
+		</tr>
  		</table>
 
-    <input type="hidden" name="id" id="id" value="<?php echo $row_categoria['id'];?>">
-      
-     <input type="hidden" name="MM_update" value="captchaform">	
+    	<input type="hidden" name="status" id="status" value="<?php echo $row_categoria['status'];?>">
+       <input type="hidden" name="id" id="id" value="<?php echo $row_categoria['id'];?>">
+    
+
 </form>  
-<br /><br />
+
+<!-- FIN DE NUEVO INGRESO -->	
+<div id="message" class="alert alert-success alert-dismissable" style="width:300px;position:relative;z-index:10 !important;">
+   <i class="fa fa-check"></i><p></p></div>
 
 <!-- FIN DE CLIENTE NUEVO INGRESO -->	
+</div>
+</div>
 
 
 		
 </center>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />	
 </body>
-
 </html>

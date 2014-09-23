@@ -1,6 +1,6 @@
 <?php ob_start();
+
 require_once('../inc/conexion_modules.inc.php'); 
-require_once('../inc/config.inc.php');
 
 function sanear_string($string)
 {
@@ -84,38 +84,22 @@ $rutaDestinoBD=$rutaEnServidor.'/'.$nombreImagen;
 move_uploaded_file($rutaTemporal,$rutaDestino);  
 
 
-if($_POST['des_espanol']==""){
-    $des_espanol=$_POST['des_espanol2'];
-}else{
-    $des_espanol=$_POST['des_espanol'];
-}
+    $des_prod=$_POST['contenido'];
 
 
- $insertSQL = sprintf("INSERT INTO sis_anuncio(id_anuncio, id_usuario, id_categoria, id_ubicacion, titulo_espanol, titulo_ingles,  des_espanol, preciov, precioa, recama, banios, mconstru, mterreno, estacio, direccion, costo_mante, altura, anios_constru, tipo_pisos, niveles, piso_num, piscina, balcon, video, ruta, status) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s )", 
-                        GetSQLValueString($_POST['id_anuncio'], "int"),
-                        GetSQLValueString($_POST['id_usuario'], "bigint"),
-                        GetSQLValueString($_POST['id_categoria'], "int"),
-                        GetSQLValueString($_POST['id_ubicacion'], "int"),
-                        GetSQLValueString($_POST['titulo_espanol'], "text"),
-                        GetSQLValueString($_POST['titulo_ingles'], "text"),
-                        GetSQLValueString($_POST['des_espanol'], "text"),
-                        GetSQLValueString($_POST['preciov'], "double"),
-                        GetSQLValueString($_POST['precioa'], "double"),
-                        GetSQLValueString($_POST['recama'], "int"),
-                        GetSQLValueString($_POST['banios'], "int"),
-                        GetSQLValueString($_POST['mconstru'], "text"),
-                        GetSQLValueString($_POST['mterreno'], "text"),
-                        GetSQLValueString($_POST['estacio'], "int"),
-                        GetSQLValueString($_POST['direccion'], "text"),
-                        GetSQLValueString($_POST['costo_mante'], "text"),
-                        GetSQLValueString($_POST['altura'], "text"),
-                        GetSQLValueString($_POST['anios_constru'], "text"),
-                        GetSQLValueString($_POST['tipo_pisos'], "text"),
-                        GetSQLValueString($_POST['niveles'], "int"),
-                        GetSQLValueString($_POST['piso_num'], "int"),
-                        GetSQLValueString($_POST['piscina'], "int"),
-                        GetSQLValueString($_POST['balcon'], "int"),
-                        GetSQLValueString($_POST['video'], "text"),
+ $insertSQL = sprintf("INSERT INTO sis_productos(id, cod_prod, nombre_prod, id_cate, id_marca, des_prod, des_prod_corto, existencia, precio, descuento, destacado, clave, ruta, status) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
+                        GetSQLValueString($_POST['id'], "int"),
+                        GetSQLValueString($_POST['cod_prod'], "text"),
+                        GetSQLValueString($_POST['nombre_prod'], "text"),
+                        GetSQLValueString($_POST['id_cate'], "int"),
+                        GetSQLValueString($_POST['id_marca'], "int"),
+                        GetSQLValueString($des_prod, "text"),
+                        GetSQLValueString($_POST['des_prod_corto'], "text"),
+                        GetSQLValueString($_POST['existencia'], "int"),
+                        GetSQLValueString($_POST['precio'], "double"),
+                        GetSQLValueString($_POST['descuento'], "double"),
+                        GetSQLValueString($_POST['destacado'], "int"),
+                        GetSQLValueString($_POST['clave'], "text"),
                         GetSQLValueString($rutaDestinoBD, "text"),
                         GetSQLValueString($_POST['status'], "int"));
                        
@@ -129,3 +113,4 @@ $return_loc = "index.php";
 
 
 ob_end_flush(); ?>
+
