@@ -3548,3 +3548,9 @@ text-shadow: 0 0 4px #000;
 
 #box-formulario3{display: none;}
 #box-formulario3:target{display: block;}
+
+.boton-modulo{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
