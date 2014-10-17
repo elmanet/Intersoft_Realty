@@ -20,10 +20,11 @@ $(function() {
 
   var myDropzone = new Dropzone("#my-dropzone");
 
-  myDropzone.on("addedfile", function(file) {
+ myDropzone.on("addedfile", function(file) {
     setTimeout(function() {
-$("#divtest").load('modules/productos/admin.php'); 
-},100);
+              url = "index.php?mod=gestor-anuncio";
+              $(location).attr('href',url);
+              },2500);
   }); 
 
 
@@ -42,7 +43,7 @@ $("#divtest").load('modules/productos/admin.php');
 
 <div style="width:49%; display:inline-block;vertical-align: top;">
 
-<form action="modules/productos/recibir_foto.php?id=<?php echo $_GET['id'];?>" class="dropzone" id="my-dropzone" method="post" enctype="multipart/form-data">
+<form action="modules/anuncios/recibir_foto.php?id=<?php echo $_GET['id'];?>" class="dropzone" id="my-dropzone" method="post" enctype="multipart/form-data">
   <div class="fallback">
     <input name="imagen" type="file"/>
   </div>
@@ -51,7 +52,6 @@ $("#divtest").load('modules/productos/admin.php');
 </div>
 
 </div>
-
 </body>
 
 </html>

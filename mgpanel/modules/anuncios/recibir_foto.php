@@ -97,10 +97,10 @@ if (!empty($_FILES)) {
 
 $id=$_GET['id'];
 
-	
-	$updateSQL = sprintf("UPDATE sis_anuncio SET ruta=%s WHERE id_anuncio=%s",  
-							 
-					GetSQLValueString($rutaDestino, "text"),
+    
+    $updateSQL = sprintf("UPDATE sis_anuncio SET ruta=%s WHERE id_anuncio=%s",  
+                             
+                    GetSQLValueString($rutaDestino, "text"),
                     GetSQLValueString($id, "int"));
                        
   mysql_select_db($database_sistemai, $sistemai);

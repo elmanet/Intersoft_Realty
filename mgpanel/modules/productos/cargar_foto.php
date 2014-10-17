@@ -22,7 +22,7 @@ $(function() {
     setTimeout(function() {
               url = "index.php?mod=gestor-productos";
               $(location).attr('href',url);
-              },1000);
+              },1500);
   }); 
 
 

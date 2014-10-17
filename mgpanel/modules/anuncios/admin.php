@@ -68,9 +68,9 @@ $totalRows_anuncio = mysql_num_rows($anuncio);
               <td align="center" ><?php echo $row_anuncio['id_anuncio']; ?></td>
               <td  height="26" align="center" >
               <?php if($row_anuncio['ruta']=="imagenes/"){ ?>
-               <a href="javascript:cargar('#divtest', 'modules/anuncios/cargar_foto.php?&id=<?php echo $row_anuncio['id'];?>')"><span class="glyphicon glyphicon-picture" style="font-size:2em;"></span></a>
+               <a href="javascript:cargar('#divtest', 'modules/anuncios/cargar_foto.php?&id=<?php echo $row_anuncio['id_anuncio'];?>')"><span class="glyphicon glyphicon-picture" style="font-size:2em;"></span></a>
               <?php } else { ?>
-              <a href="javascript:cargar('#divtest', 'modules/anuncios/eliminar_foto.php?id=<?php echo $row_anuncio['id'];?>&ruta=<?php echo '../../../imagesmg/'.$row_anuncio['ruta'];?>')"  class="ask-custom">
+              <a href="javascript:cargar('#divtest', 'modules/anuncios/eliminar_foto.php?id=<?php echo $row_anuncio['id_anuncio'];?>&ruta=<?php echo '../../../imagesmg/'.$row_anuncio['ruta'];?>')"  class="ask-custom">
                  <img src="../imagesmg/<?php echo $row_anuncio['ruta']; ?>" alt="" height="40" >
               </a>
               <?php } ?>

@@ -10,7 +10,7 @@ $foto="imagenes/";
 	{
 		
 
- 	$updateSQL = sprintf("UPDATE sis_productos SET ruta=%s WHERE id=%s",  
+ 	$updateSQL = sprintf("UPDATE sis_anuncio SET ruta=%s WHERE id_anuncio=%s",  
 		 
 		  GetSQLValueString($foto, "text"),
         GetSQLValueString($id, "int"));
@@ -21,7 +21,7 @@ $foto="imagenes/";
 	else
 	{
 		echo "Error al Eliminar el Archivo Foto";
-		$updateSQL = sprintf("UPDATE sis_productos SET ruta=%s WHERE id=%s",  
+		$updateSQL = sprintf("UPDATE sis_anuncio SET ruta=%s WHERE id_anuncio=%s",  
 		 
 		  GetSQLValueString($foto, "text"),
         GetSQLValueString($id, "int"));
@@ -35,14 +35,8 @@ $foto="imagenes/";
 <head>
 <meta http-equiv="Content-type" content="text/html; utf-8" />
 <title><?php echo $row_config['title_site'];?></title>
+<meta http-equiv="Refresh" content="1;url=index.php?mod=gestor-anuncio">
 
-<script type="text/javascript">
-$(document).ready(function() {
-	setTimeout(function() {
-		$("#divtest").load('modules/productos/admin.php');
-	},500);
-});
-</script>
 
 </head>
 

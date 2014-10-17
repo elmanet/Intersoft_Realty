@@ -30,7 +30,7 @@ $totalRows_anunciofoto = mysql_num_rows($anunciofoto);
 <?php require_once('modules/inc/barra_buscar.inc.php'); ?>
 <hr>
 <div style="width:90%;margin:auto;">
-<h1><?php echo $row_anuncio['titulo_espanol']; ?>  <span style="font-size:15px;"> - <a href="javascript:history.back()">Regresar</a></span><br>
+<h1><?php echo $row_anuncio['titulo_espanol']; ?>  <span style="font-size:15px;"> - <a href="javascript:history.back()">Back</a></span><br>
 <span>
 <div class="fb-share-button" data-href="http://<?php echo $row_config['website'];?>/index.php?mg=anuncios-detalle&135798642Detalle=<?php echo $row_anuncio['id']; ?>" data-type="button_count"></div>
 </span>
@@ -69,32 +69,32 @@ $totalRows_anunciofoto = mysql_num_rows($anunciofoto);
 </div>
 <div style="width:100%;float:left;">
 	<div style="width: 38%;float: left;background: #ECEAEA;border: 1px solid #CACACA;padding: 1%;">
-		<h2>Características</h2>
+		<h2>Features</h2>
 		<p>
 		<?php 
 		$preciov=$row_anuncio['preciov'];
 		$precioa=$row_anuncio['precioa'];
 		if($row_anuncio['preciov']>0) {
-		        echo "<b>Venta:</b> ".$row_config['simbolo_moneda']." ".number_format($preciov,2,'.',',');
+		        echo "<b>Sale:</b> ".$row_config['simbolo_moneda']." ".number_format($preciov,2,'.',',');
 		        }
 		 if($row_anuncio['precioa']>0) {
-		        echo "<br><b>Alquiler:</b> ".$row_config['simbolo_moneda']." ".number_format($precioa,2,'.',',');
+		        echo "<br><b>Rental:</b> ".$row_config['simbolo_moneda']." ".number_format($precioa,2,'.',',');
 		        }
 		 ?><br>
-		<b>Ubicación:</b> <?php echo $row_anuncio_ubicacion['nombre_ubi']; ?><br>
-		<?php if($row_anuncio['recama']>0){?><b>Recamaras:</b> <?php echo $row_anuncio['recama']; ?><br><?php } ?>
-		<?php if($row_anuncio['banios']>0){?><b>Baños:</b> <?php echo $row_anuncio['banios']; ?><br><?php } ?>
-		<?php if($row_anuncio['estacio']>0){?><b>Estacionamientos:</b> <?php echo $row_anuncio['estacio']; ?><br><?php } ?>
-		<?php if($row_anuncio['mconstru']>0){?><b>Metros de Construcción:</b> <?php echo $row_anuncio['mconstru']; ?> Mts.<br><?php } ?>
-		<?php if($row_anuncio['mterreno']>0){?><b>Metros de Terreno:</b> <?php echo $row_anuncio['mterreno']; ?> Mts.<br><?php } ?>
-		<?php if($row_anuncio['tipo_pisos']>0){?><b>Tipo de Pisos:</b> <?php echo $row_anuncio['tipo_pisos']; ?><br><?php } ?>
-		<?php if($row_anuncio['niveles']>0){?><b>Niveles:</b> <?php echo $row_anuncio['niveles']; ?><br><?php } ?>
-		<?php if($row_anuncio['altura']>0){?><b>Altura:</b> <?php echo $row_anuncio['altura']; ?><br><?php } ?>
-		<?php if($row_anuncio['anios_constru']>0){?><b>Años de Construcción:</b> <?php echo $row_anuncio['anios_constru']; ?><br><?php } ?>
-		<?php if($row_anuncio['piso_num']>0){?><b>Piso Número:</b> <?php echo $row_anuncio['piso_num']; ?><br><?php } ?>
-		<?php if($row_anuncio['costo_mante']>0){?><b>Costo de Mantenimiento:</b> <?php echo $row_anuncio['costo_mante']; ?><br><?php } ?>
-		<b>Piscina:</b> <?php if($row_anuncio['piscina']==1) echo "Si"; if($row_anuncio['piscina']==0) echo "No"; ?><br>
-		<b>Balcón:</b> <?php if($row_anuncio['balcon']==1) echo "Si"; if($row_anuncio['balcon']==0) echo "No"; ?><br>
+		<b>Location:</b> <?php echo $row_anuncio_ubicacion['nombre_ubi']; ?><br>
+		<?php if($row_anuncio['recama']>0){?><b>bedrooms:</b> <?php echo $row_anuncio['recama']; ?><br><?php } ?>
+		<?php if($row_anuncio['banios']>0){?><b>Bathrooms:</b> <?php echo $row_anuncio['banios']; ?><br><?php } ?>
+		<?php if($row_anuncio['estacio']>0){?><b>Parking:</b> <?php echo $row_anuncio['estacio']; ?><br><?php } ?>
+		<?php if($row_anuncio['mconstru']>0){?><b>Construction Area:</b> <?php echo $row_anuncio['mconstru']; ?> Mts.<br><?php } ?>
+		<?php if($row_anuncio['mterreno']>0){?><b>Meters of Land:</b> <?php echo $row_anuncio['mterreno']; ?> Mts.<br><?php } ?>
+		<?php if($row_anuncio['tipo_pisos']>0){?><b>Type of Flooring:</b> <?php echo $row_anuncio['tipo_pisos']; ?><br><?php } ?>
+		<?php if($row_anuncio['niveles']>0){?><b>levels:</b> <?php echo $row_anuncio['niveles']; ?><br><?php } ?>
+		<?php if($row_anuncio['altura']>0){?><b>Height:</b> <?php echo $row_anuncio['altura']; ?><br><?php } ?>
+		<?php if($row_anuncio['anios_constru']>0){?><b>Years of Construction:</b> <?php echo $row_anuncio['anios_constru']; ?><br><?php } ?>
+		<?php if($row_anuncio['piso_num']>0){?><b>Apartment Number:</b> <?php echo $row_anuncio['piso_num']; ?><br><?php } ?>
+		<?php if($row_anuncio['costo_mante']>0){?><b>Maintenance Cost:</b> <?php echo $row_anuncio['costo_mante']; ?><br><?php } ?>
+		<b>swimming pool:</b> <?php if($row_anuncio['piscina']==1) echo "Si"; if($row_anuncio['piscina']==0) echo "No"; ?><br>
+		<b>balcony:</b> <?php if($row_anuncio['balcon']==1) echo "Si"; if($row_anuncio['balcon']==0) echo "No"; ?><br>
 		
 
 		</p>
@@ -104,8 +104,5 @@ $totalRows_anunciofoto = mysql_num_rows($anunciofoto);
 		<p><?php echo $row_anuncio['des_espanol']; ?></p>
 	</div>
 </div>
-<?php /*
-<h1>Comentarios</h1>
-<div class="fb-comments" data-href="http://<?php echo $row_config['website'];?>/index.php?mg=anuncios-detalle&135798642Detalle=<?php echo $row_anuncio['id']; ?>" data-width="600" data-numposts="5" data-colorscheme="light"></div>
-*/?>
+
 </div>

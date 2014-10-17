@@ -427,7 +427,7 @@ mysql_select_db($database_sistemai, $sistemai);
 $query_anuncio_gen_cant = "SELECT * FROM sis_anuncio a, sis_anuncio_categoria b WHERE a.status=1 AND a.id_categoria=b.id_cat";
 $anuncio_gen_cant = mysql_query($query_anuncio_gen_cant, $sistemai) or die(mysql_error());
 $totalRows_anuncio_gen_cant = mysql_num_rows($anuncio_gen_cant);
-$rows_per_page=9;
+$rows_per_page=10;
 $lastpage= ceil($totalRows_anuncio_gen_cant / $rows_per_page);
 $page=(int)$page;
 if($page > $lastpage){
