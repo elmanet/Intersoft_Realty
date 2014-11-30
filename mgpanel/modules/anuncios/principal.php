@@ -1,9 +1,9 @@
 <?php
 mysql_select_db($database_sistemai, $sistemai);
-$query_producto = "SELECT * FROM sis_anuncio a, sis_anuncio_categoria b, sis_anuncio_ubicacion c WHERE a.id_categoria=b.id_cat AND a.id_ubicacion=c.id_ubi  ORDER BY a.creado DESC";
-$producto = mysql_query($query_producto, $sistemai) or die(mysql_error());
-$row_producto = mysql_fetch_assoc($producto);
-$totalRows_producto = mysql_num_rows($producto);
+$query_anuncio = "SELECT * FROM sis_anuncio a, sis_anuncio_categoria b, sis_anuncio_ubicacion c WHERE a.id_categoria=b.id_cat AND a.id_ubicacion=c.id_ubi  ORDER BY a.creado DESC LIMIT 5";
+$anuncio = mysql_query($query_anuncio, $sistemai) or die(mysql_error());
+$row_anuncio = mysql_fetch_assoc($anuncio);
+$totalRows_anuncio = mysql_num_rows($anuncio);
 //FIN DE LA BUSQUEDA
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -11,40 +11,15 @@ $totalRows_producto = mysql_num_rows($producto);
 <head>
 <meta http-equiv="Content-type" content="text/html; utf-8" />
 
-<?php /* FUNCION PREGUNTAR ANTES */ ?>         
-<script type="text/javascript" src="js/jconfirmaction.jquery.js"></script>
-        <script type="text/javascript">
-          
-          $(document).ready(function() {
-            
-            
-            $('.ask-plain').click(function(e) {
-              
-              e.preventDefault();
-              thisHref  = $(this).attr('href');
-              
-              if(confirm('Are you sure')) {
-                window.location = thisHref;
-              }
-              
-            });
-            
-            $('.ask-custom').jConfirmAction({question : "Quieres Eliminarlo?", yesAnswer : "Si", cancelAnswer : "Cancelar"});
-            $('.ask').jConfirmAction();
-          });
-          
-        </script>
- <?php /* FUNCION PREGUNTAR ANTES */ ?> 
-
-
 </head>
 
 <body>
 
-<?php if ($totalRows_producto>0){ ?>            
+<?php if ($totalRows_anuncio>0){ ?>            
 
-<div class="box-body table-responsive">
-    <table id="example2" class="table table-bordered table-striped">
+<div class="box-body table-responsive" style="width: 96%;margin: auto;">
+  <h2>Últimos Anuncios</h2>
+    <table id="example2" class="table table-bordered table-striped" >
         <thead>
 
             <tr >
@@ -53,9 +28,7 @@ $totalRows_producto = mysql_num_rows($producto);
             <th><b>Descripci&oacute;n del Anuncio</b></th>
             <th><b>Categor&iacute;a</b></th>
             <th><b>Precio</b></th>
-            <th><b>Fotos</b></th>
             <th><b>Status</b></th>
-            <th><b>Opciones</b></th>
             </tr>
         </thead>
              
@@ -76,9 +49,7 @@ $totalRows_producto = mysql_num_rows($producto);
               <td  align="center" >
                 <?php  echo "Venta: ".$row_anuncio['preciov'].$row_config['simbolo_moneda']; ?><br>
                 <?php  echo "Alquiler: ".$row_anuncio['precioa'].$row_config['simbolo_moneda']; ?></td>
-              <td  align="center" >
-              <a href="index.php?mod=foto-anuncio&id=<?php echo $row_anuncio['id_anuncio'];?>"  ><span class="glyphicon glyphicon-camera" style="font-size:2em;"></span></a></td>
-
+              
               <td  align="center" >
         <?php //CAMBIAR EL STATUS ?>
           <form action="#"  id="cstatus" method="GET" enctype="multipart/form-data" >
@@ -90,7 +61,7 @@ $totalRows_producto = mysql_num_rows($producto);
 
         
               </td>
-             <td  align="center" ><a href="#" onclick="cargar('#divtest', 'modules/anuncios/modificar.php?id=<?php echo $row_anuncio['id_anuncio'];?>')"><span class="glyphicon glyphicon-pencil" style="font-size:2em;"></span></a>&nbsp;<a href="javascript:cargar('#divtest', 'modules/anuncios/eliminar.php?id=<?php echo $row_anuncio['id_anuncio'];?>&ruta=<?php echo '../../../imagesmg/'.$row_anuncio['ruta'];?>')"  class="ask-custom"><span class="glyphicon glyphicon-trash" style="font-size:2em;"></span></a></td> 
+            
           
         
               </tr>
@@ -100,7 +71,7 @@ $totalRows_producto = mysql_num_rows($producto);
              </div><!-- /.box-body -->
 
             <?php } ?>
-            <?php if (($totalRows_producto==0)){ ?> 
+            <?php if (($totalRows_anuncio==0)){ ?> 
             <br>
             
             <center>
@@ -145,6 +116,29 @@ $totalRows_producto = mysql_num_rows($producto);
           
         </script>
  <?php /* FUNCION PREGUNTAR ANTES */ ?> 
+
+ <!-- DATA TABES SCRIPT -->
+
+        <script src="js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+        <script src="js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+        
+                 <!-- page script -->
+        <script type="text/javascript">
+            $(function() {
+                $("#example1").dataTable();
+                $('#example2').dataTable({
+                    "bPaginate": false,
+                    "bLengthChange": false,
+                    "bFilter": false,
+                    "bSort": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    
+                });
+
+            });
+        </script>
+
 </body>
 
 </html>

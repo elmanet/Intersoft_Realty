@@ -20,9 +20,9 @@ $precio=$row_producto['precio'];
 		  <h3 class="p17">
 		  <?php 
         if($row_producto['descuento']>0) {
-        echo "<strike>".$row_config['simbolo_moneda']." ".round($precio,2)."</strike><br>".$row_config['simbolo_moneda']." ".round($descuento,2);
+        echo "<strike>".$row_config['simbolo_moneda']." ".number_format($precio,2,'.',',')."</strike><br>".$row_config['simbolo_moneda']." ".round($descuento,2);
         }else {		  
-		   echo $row_config['simbolo_moneda']." ".round($precio,2);
+		   echo $row_config['simbolo_moneda']." ".number_format($precio,2,'.',',');
 		  }
 		  ?>
         <br>

@@ -2,27 +2,33 @@
 
 require_once('../inc/conexion_modules.inc.php'); 
 
-if($_POST['des_prod1']==""){
-    $des_prod=$_POST['des_prod2'];
-}else{
-    $des_prod=$_POST['des_prod1'];
-}
 
-$updateSQL = sprintf("UPDATE sis_productos SET cod_prod=%s, nombre_prod=%s, id_cate=%s, id_marca=%s, des_prod=%s, des_prod_corto=%s, existencia=%s, precio=%s, descuento=%s, destacado=%s, clave=%s, status=%s WHERE id=%s",  
+    $des_prod=$_POST['contenido'];
+
+
+$updateSQL = sprintf("UPDATE sis_anuncio SET titulo_espanol=%s, titulo_ingles=%s, des_espanol=%s, preciov=%s, precioa=%s, recama=%s, banios=%s, mconstru=%s, mterreno=%s, estacio=%s, direccion=%s, costo_mante=%s, altura=%s, anios_constru=%s, tipo_pisos=%s, niveles=%s, piso_num=%s, piscina=%s, balcon=%s, video=%s WHERE id_anuncio=%s",  
 							 
-							GetSQLValueString($_POST['cod_prod'], "text"),
-							GetSQLValueString($_POST['nombre_prod'], "text"),
-							GetSQLValueString($_POST['id_cate'], "int"),
-							GetSQLValueString($_POST['id_marca'], "int"),
-		                    GetSQLValueString($des_prod, "text"),
-		                    GetSQLValueString($_POST['des_prod_corto'], "text"),
-		                    GetSQLValueString($_POST['existencia'], "int"),
-		                    GetSQLValueString($_POST['precio'], "double"),
-		                    GetSQLValueString($_POST['descuento'], "double"),
-		                    GetSQLValueString($_POST['destacado'], "int"),
-		                    GetSQLValueString($_POST['clave'], "text"),
-		                    GetSQLValueString($_POST['status'], "int"),
-		                    GetSQLValueString($_POST['id'], "int"));
+							GetSQLValueString($_POST['titulo_espanol'], "text"),
+							GetSQLValueString($_POST['titulo_ingles'], "text"),
+							GetSQLValueString($des_prod, "text"),
+							GetSQLValueString($_POST['preciov'], "double"),
+		                    GetSQLValueString($_POST['precioa'], "double"),
+		                    GetSQLValueString($_POST['recama'], "int"),
+		                    GetSQLValueString($_POST['banios'], "int"),
+		                    GetSQLValueString($_POST['mconstru'], "text"),
+		                    GetSQLValueString($_POST['mterreno'], "text"),
+		                    GetSQLValueString($_POST['estacio'], "int"),
+		                    GetSQLValueString($_POST['direccion'], "text"),
+		                    GetSQLValueString($_POST['costo_mante'], "text"),
+		                    GetSQLValueString($_POST['altura'], "text"),
+		                    GetSQLValueString($_POST['anios_constru'], "text"),
+		                    GetSQLValueString($_POST['tipo_pisos'], "text"),
+		                    GetSQLValueString($_POST['niveles'], "int"),
+		                    GetSQLValueString($_POST['piso_num'], "int"),
+		                    GetSQLValueString($_POST['piscina'], "int"),
+		                    GetSQLValueString($_POST['balcon'], "int"),
+		                    GetSQLValueString($_POST['video'], "text"),
+		                    GetSQLValueString($_POST['id_anuncio'], "int"));
                        
   mysql_select_db($database_sistemai, $sistemai);
   $Result1 = mysql_query($updateSQL, $sistemai) or die(mysql_error());

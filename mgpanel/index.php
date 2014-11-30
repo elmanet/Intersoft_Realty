@@ -372,20 +372,23 @@ $totalRows_productost = mysql_num_rows($productost);
                         </li>
                         <li>
                             <a href="index.php?mod=nuevo-anuncio">
-                                <i class="fa fa-arrow-circle-up"></i> <span>Publicar Anuncio</span> <small class="badge pull-right bg-green">+</small>
+                                <i class="fa fa-arrow-circle-up"></i> <span>Nuevo Anuncio</span> <small class="badge pull-right bg-green">Nuevo</small>
                             </a>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
+                        <li>
+                            <a href="index.php?mod=gestor-anuncio">
                                 <i class="fa fa-folder-open"></i>
                                 <span>Mis Anuncios</span>
-                                <i class="fa fa-angle-left pull-right"></i>
+                                
                             </a>
+
+                            <?php /* 
                             <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-flag"></i> Activos</a></li>
-                                <li><a href="#"><i class="fa fa-thumbs-down"></i> Desactivados</a></li>
-                                <li><a href="#"><i class="fa fa-heart"></i> Favoritos</a></li>
+                                <li><a href="index.php?mod=nuevo-anuncio"><i class="fa fa-check-circle"></i> Crear Anuncio</a></li>
+                                <li><a href="index.php?mod=gestor-anuncio"><i class="fa fa-flag"></i> Gestor de Anuncios</a></li>
+                                <li><a href="#"><i class="fa fa-heart"></i> Favoritos</a></li> 
                             </ul>
+                            */ ?>
                         </li>
                         <li class="treeview">
                             <a href="#">
@@ -482,7 +485,7 @@ $totalRows_productost = mysql_num_rows($productost);
                                     <i class="fa fa-home"></i>
                                 </div>
                                 <a href="index.php?mod=gestor-anuncio" class="small-box-footer">
-                                    Ver Anuncios <i class="fa fa-arrow-circle-right"></i>
+                                    Mis Anuncios <i class="fa fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div><!-- ./col -->
@@ -682,6 +685,9 @@ if ($_GET['mod']=="nueva-categoria-producto-padre") {
     }
     if ($_GET['mod']=="nuevo-anuncio") { 
     require_once('modules/anuncios/nuevo.php');
+    }
+    if ($_GET['mod']=="modificar-anuncio") { 
+    require_once('modules/anuncios/modificar.php');
     }
     if ($_GET['mod']=="fotos-anuncio") { 
     require_once('modules/anuncios/nuevo4-fotos.php');

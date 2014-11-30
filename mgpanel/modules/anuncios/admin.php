@@ -94,7 +94,7 @@ $totalRows_anuncio = mysql_num_rows($anuncio);
 
         
               </td>
-             <td  align="center" ><a href="#" onclick="cargar('#divtest', 'modules/anuncios/modificar.php?id=<?php echo $row_anuncio['id_anuncio'];?>')"><span class="glyphicon glyphicon-pencil" style="font-size:2em;"></span></a>&nbsp;<a href="javascript:cargar('#divtest', 'modules/anuncios/eliminar.php?id=<?php echo $row_anuncio['id_anuncio'];?>&ruta=<?php echo '../../../imagesmg/'.$row_anuncio['ruta'];?>')"  class="ask-custom"><span class="glyphicon glyphicon-trash" style="font-size:2em;"></span></a></td> 
+             <td  align="center" ><a href="index.php?mod=modificar-anuncio&id=<?php echo $row_anuncio['id_anuncio'];?>"><span class="glyphicon glyphicon-pencil" style="font-size:2em;"></span></a>&nbsp;<a href="javascript:cargar('#divtest', 'modules/anuncios/eliminar.php?id=<?php echo $row_anuncio['id_anuncio'];?>&ruta=<?php echo '../../../imagesmg/'.$row_anuncio['ruta'];?>')"  class="ask-custom"><span class="glyphicon glyphicon-trash" style="font-size:2em;"></span></a></td> 
 				  
         
               </tr>
